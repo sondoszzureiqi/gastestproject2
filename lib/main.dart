@@ -47,6 +47,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      routes: {
+          '/login': (context) => const LoginScreen(),
+          '/profile': (context) => const ProfileScreen(),
+          '/edit_profile': (context) =>
+          const PlaceholderScreen(title: "Edit Profile"),
+          //const PlaceholderScreen(title: "Settings"),
+          // '/order_details': (context) => const OrderDetailsPage(),
+          //'/route_optimization': (context) => const RouteOptimizationPage(),
+          '/order_placement': (context) => const OrderPlacementPage(),
+          '/order_tracking': (context) => OrderTrackingScreen(orderId: ''),
+          '/payment': (context) => const PaymentPage(),
+          '/edit_profile': (context) => const EditProfilePage(),
+          '/notification': (context) => const NotificationPage(),
+
+        },
       home:WelcomeScreen()
     );
   }
