@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gastestproject/driver_authentication/login_screen_driver.dart';
 import 'package:gastestproject/methods/common_methods.dart';
 import 'package:gastestproject/driver_pages/dashboard.dart';
-import 'package:gastestproject/pages/welcome_screen.dart';
+import 'package:gastestproject/widgets/welcome_screen.dart';
 import 'package:gastestproject/widgets/loading_dialog.dart';
 
 class SignUpScreenDriver extends StatefulWidget {
@@ -74,7 +75,6 @@ class _SignUpScreenDriverState extends State<SignUpScreenDriver> {
     if (!context.mounted) return;
     Navigator.pop(context);
 
-    // ✅ FIXED: Changed 'driver' to 'drivers' so login will match
     DatabaseReference usersRef = FirebaseDatabase.instance
         .ref()
         .child('drivers')
@@ -95,6 +95,15 @@ class _SignUpScreenDriverState extends State<SignUpScreenDriver> {
     };
 
     usersRef.set(driverDataMap);
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userFirebase.uid)
+        .set({
+      'role': 'seller',
+      'name': _usernameController.text.trim(),
+      'email': _emailController.text.trim(),
+    });
 
     Navigator.push(
       context,
